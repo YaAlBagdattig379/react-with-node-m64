@@ -1,8 +1,23 @@
+import { useEffect, useState } from 'react';
 import './App.css';
 function App() {
+  const [users,setUsers] = useState([]);
+  useEffect(()=>{
+    fetch('http://localhost:5000/users')
+    // fetch('https://jsonplaceholder.typicode.com/users')
+    .then(res => res.json())
+    .then(data => setUsers(data))
+  })
   return (
     <div>
-         <h1>Hello Empty projects of react with node m64</h1>
+         <h1 className='text-center text-success'>Hello 'react with node m64'</h1>
+         <h3>Total users : {users.length}</h3>
+         <ul className='justify-content-center'>
+          { 
+            users.map(user =><li className='border' key={user.id}>{user.id} <br /> {user.name} <br /> {user.email}</li>)
+          }
+         </ul>
+         
     </div>
   );
 }
