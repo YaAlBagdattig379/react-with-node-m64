@@ -13,16 +13,33 @@ function App() {
     const name = event.target.name.value;
     const email = event.target.email.value;
     console.log(name,email)
+    const user = {name,email};
+    // post data to server 
+    fetch('http://localhost:5000/user',{
+      method:'POST',
+      headers:{
+        'content-type':'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+    })
   }
   return (
-    <div>
+    <div className='container'>
          <h1 className='text-center text-success'>Hello 'react with node m64'</h1>
          <h3>Total users : {users.length}</h3>
-         <form onSubmit={handleAddUser}>
-          <input type="text" name=""placeholder='name' id="" /> <br />
-          <input type="text" name=""placeholder='email' id="" /> <br />
-          <input type="submit" value="Add User" />
+
+         <div className='text-center'>
+           <form onSubmit={handleAddUser} className='mb-5'>
+             <input type="text" name=""placeholder='name' id="" required/> <br />
+             <input type="text" name=""placeholder='email' id="" required/> <br />
+           <input type="submit" value="Add User" />
          </form>
+         </div>
+         
          <ul className='justify-content-center'>
           { 
             users.map(user =><li className='border' key={user.id}>{user.id} <br /> {user.name} <br /> {user.email}</li>)
